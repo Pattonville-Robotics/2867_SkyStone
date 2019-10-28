@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -17,6 +19,7 @@ public class T856Auto extends LinearOpMode {
     // todo: write your code here your code
     private MecanumEncoderDrive drive;
     private VuforiaNavigation vuforia;
+    private Servo claw;
     
     @Override
     public void runOpMode() {
@@ -47,7 +50,7 @@ public class T856Auto extends LinearOpMode {
     }
     public void initialize() {
         drive = new MecanumEncoderDrive(hardwareMap,this,CustomizedRobotParameters.ROBOT_PARAMETERS);
-
+        claw = hardwareMap.servo.get("claw");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         vuforia = new VuforiaNavigation(new VuforiaParameters.Builder()
                 .cameraMonitorViewId(/*R.id.cameraMonitorViewId*/cameraMonitorViewId)
