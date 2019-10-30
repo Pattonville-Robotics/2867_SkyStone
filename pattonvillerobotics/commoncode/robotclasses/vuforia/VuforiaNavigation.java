@@ -193,4 +193,8 @@ public class VuforiaNavigation {
         }
         return null;
     }
+    
+    public VuforiaLocalizer getLocalizer () {
+        return vuforia;
+    }
 }

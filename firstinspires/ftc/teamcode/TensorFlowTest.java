@@ -34,25 +34,30 @@ public class TensorFlowTest extends LinearOpMode {
 
         vuforia.activateTracking();
         tfod.activateTracking();
+
+        telemetry.addData("Initialized", "");
+        telemetry.update();
         waitForStart();
 
         while (opModeIsActive()) {
 
             List<Recognition> skyStones = tfod.getSkyStones();
+            List<Recognition> stones = tfod.getStones();
             skystone.setValue(skyStones.size());
-            stone.setValue(tfod.getStones().size());
+            stone.setValue(stones.size());
 
-            List<Integer> skyStonePosList = tfod.getSkyStonePositions();
-            if (skyStonePosList.size() >= 1) {
-                skystonePos.setValue(skyStonePosList.get(0).toString() + ", " + skyStones.get(0).getConfidence());
+            if (skyStones.size() >= 1) {
+                Recognition skyStone = skyStones.get(0);
+                skystonePos.setValue((int)skyStone.getLeft() + ", " + (int)skyStone.getRight() + "; " + skyStone.getConfidence());
             }
             else {
                 skystonePos.setValue("");
             }
 
             List<Integer> stonePosList = tfod.getStonePositions();
-            if (stonePosList.size() >= 1) {
-               stonePos.setValue(stonePosList.get(0));
+            if (stonePosList.size() >= 1 && stones.size() >= 1) {
+                Recognition aStone = stones.get(0);
+                stonePos.setValue((int)aStone.getLeft() + ", " + (int)aStone.getRight() + "; " + aStone.getConfidence());
             }
             else {
                 stonePos.setValue("");

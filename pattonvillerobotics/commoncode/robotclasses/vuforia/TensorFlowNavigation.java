@@ -119,6 +119,10 @@ public class TensorFlowNavigation {
         int tfodMonitorViewId = opMode.hardwareMap.appContext.getResources().getIdentifier(
             "tfodMonitorViewId", "id", opMode.hardwareMap.appContext.getPackageName());
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+
+        // want to be sure it really is what we want
+        tfodParameters.minimumConfidence = 0.7;
+
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
     }
