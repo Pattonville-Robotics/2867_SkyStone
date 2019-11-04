@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.pattonvillerobotics.robotclasses.CustomizedRobotParameters;
 
 @Autonomous
-public class T856Auto extends LinearOpMode {
+public class BlueAutonomous extends LinearOpMode {
 
     // todo: write your code here your code
     private MecanumEncoderDrive drive;
