@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
+import org.pattonvillerobotics.commoncode.robotclasses.drive.Polar2D;
 //import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 //import org.apache.commons.math3.util.FastMath;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -42,6 +42,7 @@ public class MecanumEncoderDrive {
     private DcMotor.RunMode leftDriveSavedMotorMode, rightDriveSavedMotorMode;
     private DcMotor.RunMode leftRearSavedMotorMode, rightRearSavedMotorMode;
 
+    
     public MecanumEncoderDrive(HardwareMap hardwareMap, LinearOpMode linearOpMode, RobotParameters robotParameters) {
 
         this.hardwareMap = hardwareMap;
@@ -58,8 +59,8 @@ public class MecanumEncoderDrive {
         // rear motors use same direction as front drive motors
         this.leftRearMotor.setDirection(robotParameters.getLeftDriveMotorDirection());
         this.rightRearMotor.setDirection(robotParameters.getRightDriveMotorDirection());
-telemetry("LFMotorDir: " + leftDriveMotor.getDirection());
-telemetry("RFMotorDir: " + rightDriveMotor.getDirection());
+        telemetry("LFMotorDir: " + leftDriveMotor.getDirection());
+        telemetry("RFMotorDir: " + rightDriveMotor.getDirection());
     }
 
     /**
@@ -67,9 +68,9 @@ telemetry("RFMotorDir: " + rightDriveMotor.getDirection());
      *
      * @return coordinate array in the form of [r, theta]
      */
-////    public static Vector2D toPolar(double x, double y) {
-////        return new Vector2D(Math.hypot(x, y), Math.atan2(y, x));
-////    }
+    public static Polar2D toPolar(double x, double y) {
+        return new Polar2D(Math.hypot(x, y), Math.atan2(y, x));
+    }
 
     /**
      * used to drive a mecanum drive train

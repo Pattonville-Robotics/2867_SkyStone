@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.pattonvillerobotics.commoncode.robotclasses.drive.MecanumEncoderDrive;
 import org.pattonvillerobotics.commoncode.robotclasses.vuforia.VuforiaNavigation;
 import org.pattonvillerobotics.commoncode.robotclasses.vuforia.VuforiaParameters;
+import org.pattonvillerobotics.commoncode.enums.Alliance;
 import org.pattonvillerobotics.commoncode.enums.Direction;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.pattonvillerobotics.robotclasses.CustomizedRobotParameters;
@@ -16,10 +17,11 @@ import org.pattonvillerobotics.robotclasses.CustomizedRobotParameters;
 @Autonomous
 public class BlueAutonomous extends LinearOpMode {
 
-    // todo: write your code here your code
+    private Autonomous_Common common;
     private MecanumEncoderDrive drive;
     private VuforiaNavigation vuforia;
     private Servo claw;
+    private DcMotor wrist;
     
     @Override
     public void runOpMode() {
@@ -28,19 +30,18 @@ public class BlueAutonomous extends LinearOpMode {
         vuforia.activateTracking();
         waitForStart();
         
+        
+        claw.setPosition(1);
+        sleep(2000);
+        claw.setPosition(0);
+        sleep(2000);
+        
+        
+        
         drive.moveInches(Direction.FORWARD,14,0.8);
-        Telemetry.Item vuforiaX = telemetry.addData("Robot Y", "6").setRetained(true);
-        while (opModeIsActive() && vuforia.getRobotY() == 0.0) {
-            vuforia.getVisibleTrackableLocation();
-            
-            y = vuforia.getRobotY();
-             vuforiaX.setValue(vuforia.getRobotX());
-             
-            telemetry.update();
-             
-        }
-        drive.moveInches(Direction.RIGHT, y + 7, 0.8);
-        drive.moveInches(Direction.FORWARD, 14,0.8);
+
+        common.GoToSkyStone(vuforia, this, drive);
+
         drive.moveInches(Direction.FORWARD, 24, 0.8);
         drive.rotateDegrees(Direction.COUNTERCLOCKWISE, 90, 0.8);
         drive.moveInches(Direction.FORWARD, 56, 0.8);
@@ -48,7 +49,9 @@ public class BlueAutonomous extends LinearOpMode {
         // drive.rotateDegrees(Direction.CLOCKWISE,90,0.8);
         
     }
+
     public void initialize() {
+        common = new Autonomous_Common(Alliance.BLUE);
         drive = new MecanumEncoderDrive(hardwareMap,this,CustomizedRobotParameters.ROBOT_PARAMETERS);
         claw = hardwareMap.servo.get("claw");
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
