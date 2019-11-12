@@ -22,7 +22,7 @@ public class CustomizedRobotParameters {
                 .gyroEnabled(true)
                 .wheelBaseRadius(8.5)
                 .wheelRadius(1.7)
-                .driveGearRatio(1)
+                .driveGearRatio(2.0)
                 .leftDriveMotorDirection(DcMotorSimple.Direction.FORWARD)
                 .rightDriveMotorDirection(DcMotorSimple.Direction.REVERSE)
                 .build();

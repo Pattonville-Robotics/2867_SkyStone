@@ -87,9 +87,9 @@ public class Autonomous_Common {
     }
 
     public void RaiseWrist(DcMotor wrist) {
+        wrist.setTargetPosition(200);
         wrist.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         wrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        wrist.setTargetPosition(200);
         wrist.setPower(NormalSpeed);
    }
     

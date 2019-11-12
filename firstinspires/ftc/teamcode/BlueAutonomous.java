@@ -31,10 +31,10 @@ public class BlueAutonomous extends LinearOpMode {
         waitForStart();
         
         
-        claw.setPosition(1);
-        sleep(2000);
-        claw.setPosition(0);
-        sleep(2000);
+//        claw.setPosition(1);
+//        sleep(2000);
+//        claw.setPosition(0);
+//        sleep(2000);
         
         
         

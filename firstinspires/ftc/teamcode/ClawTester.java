@@ -24,7 +24,7 @@ public class ClawTester extends LinearOpMode {
         initialize();
         //vuforia.activateTracking();
         waitForStart();
-        
+        //common.RaiseWrist(wrist);
         
         claw.setPosition(1);
         sleep(2000);
@@ -49,5 +49,7 @@ public class ClawTester extends LinearOpMode {
         common = new Autonomous_Common(Alliance.RED);
         drive = new MecanumEncoderDrive(hardwareMap,this,CustomizedRobotParameters.ROBOT_PARAMETERS);
         claw = hardwareMap.servo.get("claw");
+        wrist = hardwareMap.dcMotor.get("wrist");
+        
     }
 }
