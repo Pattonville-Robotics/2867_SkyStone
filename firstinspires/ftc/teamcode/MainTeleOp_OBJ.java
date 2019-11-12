@@ -97,6 +97,6 @@ public class MainTeleOp_OBJ extends LinearOpMode {
     }
     
     public void initialize() {
-        drive = new MecanumEncoderDrive(hardwareMap,this,CustomizedRobotParameters.ROBOT_PARAMETERS);
+        drive = new MecanumEncoderDrive(hardwareMap,this,CustomizedRobotParameters.getRobotParameters(this));
     }
 }

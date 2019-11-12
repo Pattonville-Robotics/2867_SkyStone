@@ -18,19 +18,28 @@ public class ClawTester extends LinearOpMode {
     private MecanumEncoderDrive drive;
     private Servo claw;
     private DcMotor wrist;
+    private Grabber grabber;
     
     @Override
     public void runOpMode() {
         initialize();
-        //vuforia.activateTracking();
+        grabber.ParkWrist();
+
         waitForStart();
-        //common.RaiseWrist(wrist);
+
+        grabber.SetWrist(200);
         
         claw.setPosition(1);
         sleep(2000);
-        claw.setPosition(0);
+        grabber.SetWrist(1000);
         sleep(2000);
+        claw.setPosition(0);
+        sleep(5000);
         
+        grabber.PickUpStone();
+        sleep(2000);
+        grabber.PlaceStone();
+        sleep(2000);
         
         
         //drive.moveInches(Direction.FORWARD,14,0.8);
@@ -46,10 +55,13 @@ public class ClawTester extends LinearOpMode {
     }
 
     public void initialize() {
-        common = new Autonomous_Common(Alliance.RED);
-        drive = new MecanumEncoderDrive(hardwareMap,this,CustomizedRobotParameters.ROBOT_PARAMETERS);
-        claw = hardwareMap.servo.get("claw");
-        wrist = hardwareMap.dcMotor.get("wrist");
+        common = new Autonomous_Common(Alliance.RED, this);
         
+        common.Initialize();
+        
+        drive = common.drive;
+        claw = common.claw;
+        wrist = common.wrist;
+        grabber = common.grabber;
     }
 }
