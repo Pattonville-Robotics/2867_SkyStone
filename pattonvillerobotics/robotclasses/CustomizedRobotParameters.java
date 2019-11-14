@@ -1,6 +1,8 @@
 package org.pattonvillerobotics.robotclasses;
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.robot.Robot;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
@@ -10,19 +12,30 @@ import org.pattonvillerobotics.commoncode.robotclasses.vuforia.VuforiaParameters
 
 public class CustomizedRobotParameters {
 
-    public static final RobotParameters ROBOT_PARAMETERS;
+    private static final RobotParameters ROBOT_PARAMETERS_2867;
+    private static final RobotParameters ROBOT_PARAMETERS_7856;
     public static final VuforiaParameters VUFORIA_PARAMETERS;
     //public static final PhoneOrientation PHONE_ORIENTATION;
     
     static {
         //PHONE_ORIENTATION = PhoneOrientation.LANDSCAPE_INVERSE;
-        
-        ROBOT_PARAMETERS = new RobotParameters.Builder()
+
+        ROBOT_PARAMETERS_2867 = new RobotParameters.Builder()
                 .encodersEnabled(true)
                 .gyroEnabled(true)
                 .wheelBaseRadius(8.5)
                 .wheelRadius(1.7)
                 .driveGearRatio(2.0)
+                .leftDriveMotorDirection(DcMotorSimple.Direction.FORWARD)
+                .rightDriveMotorDirection(DcMotorSimple.Direction.REVERSE)
+                .build();
+
+        ROBOT_PARAMETERS_7856 = new RobotParameters.Builder()
+                .encodersEnabled(true)
+                .gyroEnabled(true)
+                .wheelBaseRadius(8.5)
+                .wheelRadius(1.7)
+                .driveGearRatio(1.0)
                 .leftDriveMotorDirection(DcMotorSimple.Direction.FORWARD)
                 .rightDriveMotorDirection(DcMotorSimple.Direction.REVERSE)
                 .build();
@@ -35,4 +48,21 @@ public class CustomizedRobotParameters {
                 .build();
     }
 
+    static public RobotParameters getRobotParameters (LinearOpMode opMode)
+    {
+        RobotParameters robotParameters;
+        String connectionInfo = opMode.hardwareMap.get("Expansion Hub Portal 1").getConnectionInfo();
+        
+        // if it is the 7856 Expansion Hub serial number
+        if (connectionInfo.contains("DQ3MMDUG"))
+        {
+            robotParameters = ROBOT_PARAMETERS_7856;
+        }
+        else
+        {
+            robotParameters = ROBOT_PARAMETERS_2867;
+        }
+        
+        return robotParameters;
+    }
 }

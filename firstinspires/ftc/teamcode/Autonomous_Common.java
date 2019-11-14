@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.pattonvillerobotics.commoncode.robotclasses.vuforia.VuforiaNavigation;
 import org.pattonvillerobotics.commoncode.robotclasses.vuforia.VuforiaParameters;
 import org.pattonvillerobotics.commoncode.robotclasses.drive.MecanumEncoderDrive;
+import org.pattonvillerobotics.commoncode.robotclasses.drive.MecanumNoRunToPositionDrive;
 import org.pattonvillerobotics.commoncode.enums.Alliance;
 import org.pattonvillerobotics.commoncode.enums.Direction;
 import org.pattonvillerobotics.robotclasses.CustomizedRobotParameters;
@@ -32,8 +33,14 @@ public class Autonomous_Common {
         this.opMode = opMode;
     }
 
+    // this version is for teleop
+    public Autonomous_Common(LinearOpMode opMode) {
+        // alliance color doesn't matter for teleop, so just pick one        
+        this(Alliance.BLUE, opMode);
+    }
+
     public void Initialize () {
-        drive = new MecanumEncoderDrive(opMode.hardwareMap, opMode, CustomizedRobotParameters.getRobotParameters(opMode));
+        drive = new MecanumNoRunToPositionDrive(opMode.hardwareMap, opMode, CustomizedRobotParameters.getRobotParameters(opMode));
         claw = opMode.hardwareMap.servo.get("claw");
         wrist = opMode.hardwareMap.dcMotor.get("wrist");
         slides = opMode.hardwareMap.dcMotor.get("slides");
@@ -46,6 +53,24 @@ public class Autonomous_Common {
                 opMode.idle();
 
         grabber.Initialize();
+    }
+
+    public void GoToFirstStone(LinearOpMode opMode, MecanumEncoderDrive drive) {
+
+        Direction direction;
+        
+        if (alliance == Alliance.RED) {
+            direction = Direction.LEFT;
+        }
+        else
+        {
+            direction = Direction.RIGHT;
+        }
+
+        // line up with the stone
+        drive.moveInches(direction, 7, NormalSpeed);
+
+        drive.moveInches(Direction.FORWARD, 14, NormalSpeed);
     }
 
     public void GoToSkyStone(VuforiaNavigation vuforia, LinearOpMode opMode, MecanumEncoderDrive drive) {
@@ -74,7 +99,7 @@ public class Autonomous_Common {
             else
             {
                 // move towards next stone (8 inches wide)
-                drive.moveInches(direction, 8, NormalSpeed);
+                drive.moveInches(Direction.FORWARD, 8, NormalSpeed);
                 ++loops;
             }
         }        
@@ -104,13 +129,6 @@ public class Autonomous_Common {
         }
         
         return found;
-    }
-
-    public void PickUpSkyStone(Servo claw, DcMotor wrist, LinearOpMode opMode, MecanumEncoderDrive drive) {
- 
-        claw.setPosition(1);
-        
-        grabber.SetWrist(300);
     }
 
 }

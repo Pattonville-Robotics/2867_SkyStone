@@ -14,10 +14,8 @@ import com.qualcomm.robotcore.util.Range;
 import org.pattonvillerobotics.robotclasses.CustomizedRobotParameters;
 import org.pattonvillerobotics.commoncode.robotclasses.drive.MecanumEncoderDrive;
 import org.pattonvillerobotics.commoncode.robotclasses.drive.Polar2D;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 
 @TeleOp
-
 public class MainTeleOp_OBJ extends LinearOpMode {
 
     // Declare OpMode members.
@@ -27,7 +25,8 @@ public class MainTeleOp_OBJ extends LinearOpMode {
     private DcMotor leftRear = null;
     private DcMotor rightRear = null;
     private MecanumEncoderDrive drive;
-    //private ListenableGamepad gamepad1;
+    private Autonomous_Common common;
+    private Buttons buttons1;
 
     @Override
     public void runOpMode() {
@@ -35,7 +34,6 @@ public class MainTeleOp_OBJ extends LinearOpMode {
         telemetry.update();
         
         Polar2D polarCoords;
-        Orientation angles;
 
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
@@ -58,45 +56,24 @@ public class MainTeleOp_OBJ extends LinearOpMode {
         runtime.reset();
 
         while (opModeIsActive()) {
-            /*
-            // Setup a variable for each drive wheel to save power level for telemetry
-            double leftPower;
-            double rightPower;
-
-            // Choose to drive using either Tank Mode, or POV Mode
-            // Comment out the method that's not used.  The default below is POV.
-
-            // POV Mode uses left stick to go forward, and right stick to turn.
-            // - This uses basic math to combine motions and is easier to drive straight.
-            double drive = -gamepad1.left_stick_y;
-            double turn  =  gamepad1.right_stick_x;
-            leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-
-            // Tank Mode uses one stick to control each wheel.
-            // - This requires no math, but it is hard to drive forward slowly and keep straight.
-            // leftPower  = -gamepad1.left_stick_y ;
-            // rightPower = -gamepad1.right_stick_y ;
-
-            // Send calculated power to wheels
-            leftDrive.setPower(leftPower);
-            rightDrive.setPower(rightPower);
-            leftRear.setPower(leftPower);
-            rightRear.setPower(rightPower);
-
-            // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
-            telemetry.update();
-            */
             polarCoords = drive.toPolar(-gamepad1.left_stick_x, gamepad1.left_stick_y);
-            // angles = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.ZYX,AngleUnit.RADIANS);
-            // listenableGamepad1.update(gamepad1);
+
             drive.moveFreely(polarCoords.angle,polarCoords.distance,-gamepad1.right_stick_x);
+
+            if (buttons1.LeftBumperJustPressed())
+            {
+                // do something
+                common.grabber.PickUpStone();
+            }
         }
     }
     
     public void initialize() {
-        drive = new MecanumEncoderDrive(hardwareMap,this,CustomizedRobotParameters.getRobotParameters(this));
+        buttons1 = new Buttons(gamepad1);
+        common = new Autonomous_Common(this);
+        
+        common.Initialize();
+        
+        drive = common.drive;
     }
 }

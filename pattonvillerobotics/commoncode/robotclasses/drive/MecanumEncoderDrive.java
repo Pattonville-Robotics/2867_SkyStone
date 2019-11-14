@@ -7,16 +7,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.pattonvillerobotics.commoncode.robotclasses.drive.Polar2D;
-//import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
-//import org.apache.commons.math3.util.FastMath;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.pattonvillerobotics.commoncode.enums.Direction;
 
 import java.util.Locale;
-
-//import static org.apache.commons.math3.util.FastMath.PI;
-//import static org.apache.commons.math3.util.FastMath.cos;
-//import static org.apache.commons.math3.util.FastMath.sin;
 
 /**
  * Created by greg on 10/2/2017.
@@ -24,13 +18,13 @@ import java.util.Locale;
 
 public class MecanumEncoderDrive {
 
-    private static final String TAG = "MecanumEncoderDrive";
-    private static final double COS_135 = Math.cos(3 * Math.PI / 4);
-    private static final double SIN_135 = -COS_135;
-    private static final double DEG_45 = Math.PI / 4;
+    protected static final String TAG = "MecanumEncoderDrive";
+    protected static final double COS_135 = Math.cos(3 * Math.PI / 4);
+    protected static final double SIN_135 = -COS_135;
+    protected static final double DEG_45 = Math.PI / 4;
 
-    private static final String LEFT_REAR_MOTOR_NAME = "left_rear_motor";
-    private static final String RIGHT_REAR_MOTOR_NAME = "right_rear_motor";
+    protected static final String LEFT_REAR_MOTOR_NAME = "left_rear_motor";
+    protected static final String RIGHT_REAR_MOTOR_NAME = "right_rear_motor";
     public static final int TARGET_REACHED_THRESHOLD = 16;
 
     protected final RobotParameters robotParameters;
@@ -39,10 +33,9 @@ public class MecanumEncoderDrive {
 
     public final DcMotor leftDriveMotor, rightDriveMotor;
     public DcMotor leftRearMotor, rightRearMotor;
-    private DcMotor.RunMode leftDriveSavedMotorMode, rightDriveSavedMotorMode;
-    private DcMotor.RunMode leftRearSavedMotorMode, rightRearSavedMotorMode;
+    protected DcMotor.RunMode leftDriveSavedMotorMode, rightDriveSavedMotorMode;
+    protected DcMotor.RunMode leftRearSavedMotorMode, rightRearSavedMotorMode;
 
-    
     public MecanumEncoderDrive(HardwareMap hardwareMap, LinearOpMode linearOpMode, RobotParameters robotParameters) {
 
         this.hardwareMap = hardwareMap;
@@ -148,6 +141,7 @@ public class MecanumEncoderDrive {
             default:
                 throw new IllegalArgumentException("Direction must be Direction.FORWARDS, Direction.BACKWARDS, Direction.LEFT, or Direction.RIGHT!");
         }
+power=0.2;
 
         Log.e(TAG, "Setting motor power high");
         move(Direction.FORWARD, power); // To keep power in [0.0, 1.0]. Encoders control direction
@@ -321,14 +315,18 @@ public class MecanumEncoderDrive {
     }
 
     protected void setMotorsRunToPosition() {
-        if (leftDriveMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION)
-            leftDriveMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        if (rightDriveMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION)
-            rightDriveMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        if (leftRearMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION)
-            leftRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        if (rightRearMotor.getMode() != DcMotor.RunMode.RUN_TO_POSITION)
-            rightRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        setMotorsMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    protected void setMotorsMode(DcMotor.RunMode mode) {
+        if (leftDriveMotor.getMode() != mode)
+            leftDriveMotor.setMode(mode);
+        if (rightDriveMotor.getMode() != mode)
+            rightDriveMotor.setMode(mode);
+        if (leftRearMotor.getMode() != mode)
+            leftRearMotor.setMode(mode);
+        if (rightRearMotor.getMode() != mode)
+            rightRearMotor.setMode(mode);
     }
 
     public void sleep(long milli) {

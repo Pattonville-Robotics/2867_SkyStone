@@ -38,11 +38,12 @@ public class BlueAutonomous extends LinearOpMode {
         
         drive.moveInches(Direction.FORWARD,14,0.8);
 
-        common.GoToSkyStone(vuforia, this, drive);
+//        common.GoToSkyStone(vuforia, this, drive);
+        common.GoToFirstStone(this, drive);
 
-        drive.moveInches(Direction.FORWARD, 24, 0.8);
+        drive.moveInches(Direction.BACKWARD, 8, 0.8);
         drive.rotateDegrees(Direction.COUNTERCLOCKWISE, 90, 0.8);
-        drive.moveInches(Direction.FORWARD, 56, 0.8);
+        drive.moveInches(Direction.FORWARD, 16, 0.8);
         //drive.moveInches(Direction.BACKWARD,12,0.4);
         // drive.rotateDegrees(Direction.CLOCKWISE,90,0.8);
         
