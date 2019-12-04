@@ -69,7 +69,7 @@ public class MecanumEncoderDrive {
      * @return coordinate array in the form of [r, theta]
      */
     public static Polar2D toPolar(double x, double y) {
-        return new Polar2D(Math.hypot(x, y), Math.atan2(y, x));
+        return new Polar2D(Math.atan2(y, x), Math.hypot(x, y));
     }
 
     /**

@@ -23,24 +23,44 @@ public class ClawTester extends LinearOpMode {
     @Override
     public void runOpMode() {
         initialize();
-        grabber.ParkWrist();
 
         waitForStart();
-
-        grabber.SetWrist(200);
-        
-        claw.setPosition(1);
+        /*
+        grabber.CloseClaw();
         sleep(2000);
-        grabber.SetWrist(1000);
-        sleep(2000);
-        claw.setPosition(0);
+        grabber.SetWrist(350);
         sleep(5000);
+        grabber.SetWrist(-350);
+        sleep(5000);
+        */
         
-        grabber.PickUpStone();
-        sleep(2000);
-        grabber.PlaceStone();
-        sleep(2000);
+        //grabber.SetWrist(10);
         
+        // claw.setPosition(1);
+        // sleep(2000);
+        // grabber.SetWrist(1000);
+        // sleep(2000);
+        // claw.setPosition(0);
+        // sleep(5000);
+        /*
+        //grabber.PickUpStone();
+        grabber.LowerWrist();
+        sleep(3300);
+        grabber.CloseClaw();
+        sleep(1400);
+        grabber.RaiseWrist();
+        sleep(1300);
+        grabber.LowerWrist();
+        sleep(2000);
+        grabber.RaiseWrist();
+        sleep(1300);
+        grabber.LowerWrist();
+        sleep(2000);
+        grabber.OpenClaw();
+        sleep(2000);
+        // grabber.PlaceStone();
+        // sleep(2000);
+        */
         
         //drive.moveInches(Direction.FORWARD,14,0.8);
 

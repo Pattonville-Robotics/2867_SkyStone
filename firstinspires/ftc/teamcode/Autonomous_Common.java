@@ -22,6 +22,8 @@ public class Autonomous_Common {
     public LinearOpMode opMode;
     public MecanumEncoderDrive drive;
     public Servo claw;
+    public Servo left;
+    public Servo right;
     public DcMotor slides;
     public DcMotor wrist;
     public Grabber grabber;
@@ -35,6 +37,8 @@ public class Autonomous_Common {
     public void Initialize () {
         drive = new MecanumEncoderDrive(opMode.hardwareMap, opMode, CustomizedRobotParameters.getRobotParameters(opMode));
         claw = opMode.hardwareMap.servo.get("claw");
+        left = opMode.hardwareMap.servo.get("left");
+        right = opMode.hardwareMap.servo.get("right");
         wrist = opMode.hardwareMap.dcMotor.get("wrist");
         slides = opMode.hardwareMap.dcMotor.get("slides");
         grabber = new Grabber (claw, wrist, slides, opMode);
@@ -112,5 +116,23 @@ public class Autonomous_Common {
         
         grabber.SetWrist(300);
     }
+<<<<<<< Updated upstream
 
+=======
+    
+    public void GrabFoundation(){
+        
+        left.setPosition(1);
+        
+        right.setPosition(0);
+        
+    }
+    
+    public void ReleaseFoundation(){
+        
+        left.setPosition(0);
+        
+        right.setPosition(1);
+    }
+>>>>>>> Stashed changes
 }

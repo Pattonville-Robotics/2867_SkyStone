@@ -14,7 +14,11 @@ import com.qualcomm.robotcore.util.Range;
 import org.pattonvillerobotics.robotclasses.CustomizedRobotParameters;
 import org.pattonvillerobotics.commoncode.robotclasses.drive.MecanumEncoderDrive;
 import org.pattonvillerobotics.commoncode.robotclasses.drive.Polar2D;
+<<<<<<< Updated upstream
 import com.qualcomm.hardware.bosch.BNO055IMU;
+=======
+import org.pattonvillerobotics.commoncode.enums.Alliance;
+>>>>>>> Stashed changes
 
 @TeleOp
 
@@ -22,10 +26,12 @@ public class MainTeleOp_OBJ extends LinearOpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
+    /*
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private DcMotor leftRear = null;
     private DcMotor rightRear = null;
+    */
     private MecanumEncoderDrive drive;
     //private ListenableGamepad gamepad1;
 
@@ -35,8 +41,12 @@ public class MainTeleOp_OBJ extends LinearOpMode {
         telemetry.update();
         
         Polar2D polarCoords;
+<<<<<<< Updated upstream
         Orientation angles;
 
+=======
+        /*
+>>>>>>> Stashed changes
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
@@ -51,13 +61,16 @@ public class MainTeleOp_OBJ extends LinearOpMode {
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
         leftRear.setDirection(DcMotor.Direction.FORWARD);
         rightRear.setDirection(DcMotor.Direction.REVERSE);
-
+        */
         // Wait for the game to start (driver presses PLAY)
+        initialize();
         waitForStart();
-        
+        //common.grabber.SetWrist(100);
+        common.grabber.OpenClaw();
         runtime.reset();
 
         while (opModeIsActive()) {
+<<<<<<< Updated upstream
             /*
             // Setup a variable for each drive wheel to save power level for telemetry
             double leftPower;
@@ -93,10 +106,52 @@ public class MainTeleOp_OBJ extends LinearOpMode {
             // angles = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.ZYX,AngleUnit.RADIANS);
             // listenableGamepad1.update(gamepad1);
             drive.moveFreely(polarCoords.angle,polarCoords.distance,-gamepad1.right_stick_x);
+=======
+            polarCoords = drive.toPolar(gamepad1.left_stick_x, -gamepad1.left_stick_y);
+            telemetry.addData("Polarz", "Polars: (%.2f),(%.2f)", polarCoords.distance, polarCoords.angle).setRetained(false);
+            drive.moveFreely(polarCoords.angle,polarCoords.distance,gamepad1.right_stick_x);
+            
+            if (buttons1.LeftBumperJustPressed())
+            {
+                telemetry.addLine("Left Bumper Just Pressed");
+                // do something
+                //common.grabber.PickUpStone();
+                common.grabber.CloseClaw();
+                
+            }
+            if (buttons1.RightBumperJustPressed())
+            {
+                telemetry.addLine("Right Bumper Just Pressed");
+                // do something
+                //common.grabber.PickUpStone();
+                common.grabber.OpenClaw();
+                
+            }
+            if (gamepad1.dpad_up){
+                telemetry.addLine("DPAD UP Just Pressed");
+                common.grabber.SetPower(0.8);
+            }
+            if(gamepad1.dpad_down) {
+                telemetry.addLine("Just Released");
+                common.grabber.SetPower(-0.5);
+                sleep(1000);
+                common.grabber.SetPower(0);
+            }
+            // common.slides.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
+            telemetry.update();
+>>>>>>> Stashed changes
         }
     }
     
     public void initialize() {
+<<<<<<< Updated upstream
         drive = new MecanumEncoderDrive(hardwareMap,this,CustomizedRobotParameters.getRobotParameters(this));
+=======
+        buttons1 = new Buttons(gamepad1);
+        common = new Autonomous_Common(Alliance.BLUE, this);
+        common.Initialize();
+        
+        drive = common.drive;
+>>>>>>> Stashed changes
     }
 }

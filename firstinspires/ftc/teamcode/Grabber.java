@@ -24,16 +24,18 @@ public class Grabber {
     public void Initialize ()
     {
         wrist.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        SetWrist(0);
         wrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         wrist.setPower(0.8);
 
         slides.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        SetSlides(0);
         slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         slides.setPower(0.8);
     }
     
     public void CloseClaw() {
-        claw.setPosition(1);
+        claw.setPosition(0.9);
     }
     
     public void OpenClaw() {
@@ -42,18 +44,24 @@ public class Grabber {
     
     public void SetWrist(int value) {
         wrist.setTargetPosition(value);
+        wrist.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        wrist.setPower(0.8);
+    }
+    public void SetPower(double value) {
+        wrist.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+        wrist.setPower(value);
     }
     
     public void LowerWrist() {
-        SetWrist(100);
+        SetWrist(-250);
     }
     
     public void ParkWrist() {
-        SetWrist(200);
+        SetWrist(10);
     }
     
     public void RaiseWrist() {
-        SetWrist(1000);
+        SetWrist(350);
     }
     
     public void SetSlides(int value) {
@@ -70,7 +78,7 @@ public class Grabber {
     
     public void PickUpStone() {
         LowerWrist();
-        opMode.sleep(1300);
+        opMode.sleep(5000);
         CloseClaw();
         opMode.sleep(1400);
         RaiseWrist();
