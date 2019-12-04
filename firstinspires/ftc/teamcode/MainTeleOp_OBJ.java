@@ -14,14 +14,9 @@ import com.qualcomm.robotcore.util.Range;
 import org.pattonvillerobotics.robotclasses.CustomizedRobotParameters;
 import org.pattonvillerobotics.commoncode.robotclasses.drive.MecanumEncoderDrive;
 import org.pattonvillerobotics.commoncode.robotclasses.drive.Polar2D;
-<<<<<<< Updated upstream
-import com.qualcomm.hardware.bosch.BNO055IMU;
-=======
 import org.pattonvillerobotics.commoncode.enums.Alliance;
->>>>>>> Stashed changes
 
 @TeleOp
-
 public class MainTeleOp_OBJ extends LinearOpMode {
 
     // Declare OpMode members.
@@ -33,7 +28,8 @@ public class MainTeleOp_OBJ extends LinearOpMode {
     private DcMotor rightRear = null;
     */
     private MecanumEncoderDrive drive;
-    //private ListenableGamepad gamepad1;
+    private Autonomous_Common common;
+    private Buttons buttons1;
 
     @Override
     public void runOpMode() {
@@ -41,12 +37,7 @@ public class MainTeleOp_OBJ extends LinearOpMode {
         telemetry.update();
         
         Polar2D polarCoords;
-<<<<<<< Updated upstream
-        Orientation angles;
-
-=======
         /*
->>>>>>> Stashed changes
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
@@ -70,43 +61,6 @@ public class MainTeleOp_OBJ extends LinearOpMode {
         runtime.reset();
 
         while (opModeIsActive()) {
-<<<<<<< Updated upstream
-            /*
-            // Setup a variable for each drive wheel to save power level for telemetry
-            double leftPower;
-            double rightPower;
-
-            // Choose to drive using either Tank Mode, or POV Mode
-            // Comment out the method that's not used.  The default below is POV.
-
-            // POV Mode uses left stick to go forward, and right stick to turn.
-            // - This uses basic math to combine motions and is easier to drive straight.
-            double drive = -gamepad1.left_stick_y;
-            double turn  =  gamepad1.right_stick_x;
-            leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-
-            // Tank Mode uses one stick to control each wheel.
-            // - This requires no math, but it is hard to drive forward slowly and keep straight.
-            // leftPower  = -gamepad1.left_stick_y ;
-            // rightPower = -gamepad1.right_stick_y ;
-
-            // Send calculated power to wheels
-            leftDrive.setPower(leftPower);
-            rightDrive.setPower(rightPower);
-            leftRear.setPower(leftPower);
-            rightRear.setPower(rightPower);
-
-            // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
-            telemetry.update();
-            */
-            polarCoords = drive.toPolar(-gamepad1.left_stick_x, gamepad1.left_stick_y);
-            // angles = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.ZYX,AngleUnit.RADIANS);
-            // listenableGamepad1.update(gamepad1);
-            drive.moveFreely(polarCoords.angle,polarCoords.distance,-gamepad1.right_stick_x);
-=======
             polarCoords = drive.toPolar(gamepad1.left_stick_x, -gamepad1.left_stick_y);
             telemetry.addData("Polarz", "Polars: (%.2f),(%.2f)", polarCoords.distance, polarCoords.angle).setRetained(false);
             drive.moveFreely(polarCoords.angle,polarCoords.distance,gamepad1.right_stick_x);
@@ -139,19 +93,14 @@ public class MainTeleOp_OBJ extends LinearOpMode {
             }
             // common.slides.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
             telemetry.update();
->>>>>>> Stashed changes
         }
     }
     
     public void initialize() {
-<<<<<<< Updated upstream
-        drive = new MecanumEncoderDrive(hardwareMap,this,CustomizedRobotParameters.getRobotParameters(this));
-=======
         buttons1 = new Buttons(gamepad1);
         common = new Autonomous_Common(Alliance.BLUE, this);
         common.Initialize();
         
         drive = common.drive;
->>>>>>> Stashed changes
     }
 }

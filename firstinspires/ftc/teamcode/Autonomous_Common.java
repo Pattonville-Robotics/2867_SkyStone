@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.pattonvillerobotics.commoncode.robotclasses.vuforia.VuforiaNavigation;
 import org.pattonvillerobotics.commoncode.robotclasses.vuforia.VuforiaParameters;
 import org.pattonvillerobotics.commoncode.robotclasses.drive.MecanumEncoderDrive;
+import org.pattonvillerobotics.commoncode.robotclasses.drive.MecanumNoRunToPositionDrive;
 import org.pattonvillerobotics.commoncode.enums.Alliance;
 import org.pattonvillerobotics.commoncode.enums.Direction;
 import org.pattonvillerobotics.robotclasses.CustomizedRobotParameters;
@@ -35,7 +36,7 @@ public class Autonomous_Common {
     }
 
     public void Initialize () {
-        drive = new MecanumEncoderDrive(opMode.hardwareMap, opMode, CustomizedRobotParameters.getRobotParameters(opMode));
+        drive = new MecanumNoRunToPositionDrive(opMode.hardwareMap, opMode, CustomizedRobotParameters.getRobotParameters(opMode));
         claw = opMode.hardwareMap.servo.get("claw");
         left = opMode.hardwareMap.servo.get("left");
         right = opMode.hardwareMap.servo.get("right");
@@ -116,9 +117,6 @@ public class Autonomous_Common {
         
         grabber.SetWrist(300);
     }
-<<<<<<< Updated upstream
-
-=======
     
     public void GrabFoundation(){
         
@@ -134,5 +132,4 @@ public class Autonomous_Common {
         
         right.setPosition(1);
     }
->>>>>>> Stashed changes
 }
